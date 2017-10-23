@@ -1,6 +1,4 @@
-# name of piece
-# url of piece
-# img url of piece
-# artist_name
-# genes
-# collection
+class Piece < ActiveRecord::Base
+    belongs_to :collection
+    belongs_to :gene
+end
