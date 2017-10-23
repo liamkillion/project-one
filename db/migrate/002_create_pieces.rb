@@ -4,7 +4,7 @@
 # artist_name
 # genes
 # collection
-class CreatePieces < ActiveRecord::Migration
+class CreatePieces < ActiveRecord::Migration[4.2]
   def change
     create_table :pieces do |t|
       t.string :name
