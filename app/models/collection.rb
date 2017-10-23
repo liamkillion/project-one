@@ -1,3 +1,3 @@
 # name_of_collection
-class CreateCollection < ActiveRecord::Base
+class Collection < ActiveRecord::Base
 end
