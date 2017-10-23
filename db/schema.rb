@@ -12,12 +12,9 @@
 
 ActiveRecord::Schema.define(version: 4) do
 
-  create_table "create_collections", force: :cascade do |t|
+  create_table "collections", force: :cascade do |t|
     t.string "name"
-  end
-
-  create_table "create_users", force: :cascade do |t|
-    t.string "name"
+    t.integer "user_id"
   end
 
   create_table "genes", force: :cascade do |t|
@@ -31,6 +28,10 @@ ActiveRecord::Schema.define(version: 4) do
     t.string "artist_name"
     t.integer "gene_id"
     t.integer "collection_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
   end
 
 end
