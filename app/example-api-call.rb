@@ -30,4 +30,4 @@ api = Hyperclient.new('https://api.artsy.net/api') do |api|
 end
 
 andy_warhol = api.artist(id: 'andy-warhol')
-puts "#{andy_warhol.name} was born in #{andy_warhol.birthday} in #{andy_warhol.hometown}"
+# puts "#{andy_warhol.name} was born in #{andy_warhol.birthday} in #{andy_warhol.hometown}"
