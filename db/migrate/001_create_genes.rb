@@ -1,0 +1,2 @@
+class CreateGenes
+end
