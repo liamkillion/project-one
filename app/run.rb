@@ -1,35 +1,30 @@
-# require_relative "../db/migrate/seeds.rb"
-# # require_relative "../lib/api_communicator.rb"
-# # require_relative "../lib/command_line_interface.rb"
-# #
-# # welcome
-# # loop do
-# #   puts "Type A to search for an artist or C to see a list of available categories of art, or exit to quit"
-# #   response=gets.chomp
-# #   if response == "A"
-# #     artist = get_artist_from_user
-# #     show_film(film)
-# #   elsif response == "C"
-# #     character = get_character_from_user
-# #     puts "Type P for personal information or L for list of movies"
-# #     response = gets.chomp
-# #     if response == "P"
-# #       show_character_info(character)
-# #     elsif response == "L"
-# #       show_character_movies(character)
-# #     end
-# #   elsif response == "exit"
-# #     break
-# #   end
-# # end
-# welcome
-# user = get_user
-# if user.has_collection
-#   puts "Welcome Back!"
-# else
-#   puts "Thanks for signing up!"
-#   Pieces.all.img_url.each do |url|
-#     open url
-#   end
-#   puts "W"
-# end
+# require_relative "../db/seeds.rb"
+# require_relative "../app/models/api_communicator.rb"
+# require_relative "../app/models/command_line_interface.rb"
+require_relative "../config/environment.rb"
+
+  menu_level_1 = ["Personal Collections","Search Gallery","Exit"]
+  menu_level_2 = [""]
+ welcome
+ user = get_user
+ if user.has_collection == true
+   puts "Welcome Back, #{user.name}!"
+ else
+   puts "Thanks for signing up, #{user.name}!"
+   user.create_collection
+  end
+
+loop do
+  # binding.pry
+  prints_menu(menu_level_1)
+  response = get_user_input("")
+  case response
+  when "1"
+    list_collections(user)
+    # prints_menu()
+  when "2"
+    search_gallery
+  when "3"
+    break
+  end
+end

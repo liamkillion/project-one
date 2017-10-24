@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :pieces, through: :collections
 
   def has_collection
-      self.collections.empty?
+      !self.collections.empty?
     end
 
   def create_collection
