@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+# source 'http://sourceforge.net/projects/tkimg'
 
 gem 'json'
 gem 'hyperclient'
@@ -10,3 +11,4 @@ gem 'sinatra-activerecord'
 gem 'rake'
 gem 'database_cleaner'
 gem 'require_all'
+gem 'catpix'

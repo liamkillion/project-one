@@ -21,3 +21,14 @@
 #     break
 #   end
 # end
+welcome
+user = get_user
+if user.has_collection
+  puts "Welcome Back!"
+else
+  puts "Thanks for signing up!"
+  Pieces.all.img_url.each do |url|
+    open url
+  end
+  puts "W"
+end

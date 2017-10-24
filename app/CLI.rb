@@ -1,3 +1,4 @@
+
  def welcome
    puts "Welcome Art Fan!"
  end

@@ -65,9 +65,4 @@ tomato = Piece.create(:name => "Tomato", :url => nil, :img_url=>nil, :artist_nam
 baker = Piece.create(:name => "Baker", :url => nil, :img_url=>nil, :artist_name=>"Drake" ,:gene_id=>nil, :collection_id=>nil)
 butcher = Piece.create(:name => "Butcher", :url => nil, :img_url=>nil, :artist_name=>"Ringo", :gene_id=>nil, :collection_id=>nil)
 
-
-
-modern = Gene.create(:name=>"Modern")
-classical = Gene.create(:name=>"Classical")
-futuristic = Gene.create(:name=>"Futuristic")
 binding.pry
