@@ -143,4 +143,3 @@
 # def find_specific_artist
 #
 # end
-def get_samples_pieces
