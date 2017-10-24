@@ -1,8 +1,9 @@
-# def welcome
-#   puts "Welcome Art Fan!"
-# end
-#
-# def get_artist_from_user
-#   puts "Please enter an artist"
-#   gets.chomp
-# end
+ def welcome
+   puts "Welcome Art Fan!"
+ end
+
+def get_user
+   puts "Please enter your name to log in"
+   input= gets.chomp
+   User.find_or_create_by(name: input)
+ end
