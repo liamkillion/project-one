@@ -1,146 +1,92 @@
-# require 'rest-client'
-# require 'json'
-# require 'pry'
-#
-# #make the web request
-# # iterate over the character hash to find the collection of `films` for the given
-# #   `character`
-# # collect those film API urls, make a web request to each URL to get the info
-# #  for that film
-# # return value of this method should be collection of info about each film.
-# #  i.e. an array of hashes in which each hash reps a given film
-# # this collection will be the argument given to `parse_character_movies`
-# #  and that method will do some nice presentation stuff: puts out a list
-# #  of movies by title. play around with puts out other info about a given film.
-#
-# def find_specific_character(character)
-#   all_characters = RestClient.get('http://www.swapi.co/api/people/')
-#   character_hash = JSON.parse(all_characters)
-#   character_hash["results"].find {|char_hash| char_hash["name"] == character}
-# end
-#
-# def get_character_movies_from_api(character)
-#   our_character = find_specific_character(character)
-#   films = our_character["films"]
-#   films.map do |film|
-#     film_data=RestClient.get(film)
-#     film_hash = JSON.parse(film_data)
-#   end
-# end
-#
-# def parse_character_movies(films_hash)
-#   # some iteration magic and puts out the movies in a nice list
-#   # def print_books(book_hashes)
-#   #   #for each book hash, print out name/title/subtitle/description
-#   #   book_hashes.each_with_index do |book_hash,index|
-#   #     puts "#{index+1}. #{book_hash[:title]}"
-#   #     puts "#{book_hash[:subtitle]}"
-#   #     puts "#{book_hash[:description]}"
-#   #     puts "#{book_hash[:authors]}"
-#   #     puts
-#   #   end
-#   # end
-#   films_hash=films_hash.sort_by {|film_hash| film_hash["episode_id"]}
-#   films_hash.each do |film_hash|
-#     puts "Title: #{film_hash["title"]}"
-#     puts "Episode ID: #{film_hash["episode_id"]}"
-#     puts "Directed by #{film_hash["director"]}"
-#     puts "Produced by #{film_hash["producer"]}"
-#     puts "Released on #{film_hash["release_date"]}"
-#     puts
-#   end
-# end
-#
-# def show_character_info(character)
-#   character_hash = find_specific_character(character)
-#   puts "Name: #{character_hash["name"]}"
-#   puts "Height: #{character_hash["height"]} Centimeters"
-#   puts "Weight: #{character_hash["mass"]} Kilograms"
-#   puts "Hair Color: #{character_hash["hair_color"]}"
-#   puts "Skin Tone: #{character_hash["skin_color"]}"
-#   puts "Eye Color: #{character_hash["eye_color"]}"
-#   puts "Birth Year: #{character_hash["birth_year"]}"
-#   puts "Gender: #{character_hash["gender"]}"
-#   puts
-# end
-#
-# def show_character_movies(character)
-#   if find_specific_character(character)== nil
-#     puts "No Results Founds!"
-#   else
-#     films_hash = get_character_movies_from_api(character)
-#     parse_character_movies(films_hash)
-#   end
-# end
-#
-# def find_specific_film(film_title)
-#   all_films = RestClient.get('http://www.swapi.co/api/films/')
-#   films_hash = JSON.parse(all_films)
-#   films_hash["results"].find {|film_hash| film_hash["title"] == film_title}
-# end
-#
-# def show_film(film_title)
-#   if find_specific_film(film_title)== nil
-#     puts "No Results Founds!"
-#   else
-#     film_hash = find_specific_film(film_title)
-#       puts "Title: #{film_hash["title"]}"
-#       puts "Episode ID: #{film_hash["episode_id"]}"
-#       puts "Directed by #{film_hash["director"]}"
-#       puts "Produced by #{film_hash["producer"]}"
-#       puts "Released on #{film_hash["release_date"]}"
-#       puts
-#   end
-# end
-# #
-# # def parse_film(film_title)
-# #   films_hash=films_hash.sort_by {|film_hash| film_hash["episode_id"]}
-# #   films_hash.each do |film_hash|
-# #     puts "Title: #{film_hash["title"]}"
-# #     puts "Episode ID: #{film_hash["episode_id"]}"
-# #     puts "Directed by #{film_hash["director"]}"
-# #     puts "Produced by #{film_hash["producer"]}"
-# #     puts "Released on #{film_hash["release_date"]}"
-# #     puts
-# #   end
-# # end
-# ## BONUS
-#
-# # that `get_character_movies_from_api` method is probably pretty long. Does it do more than one job?
-# # can you split it up into helper methods?
-#
-# require 'hyperclient'
-#
-# client_id = 'ff0239ea44d165afc1ac'
-# client_secret = '139d6ec5e1b5f82166205b21a92c1f1f'
-#
-# api = Hyperclient.new('https://api.artsy.net/api') do |api|
-#   api.headers['Accept'] = 'application/vnd.artsy-v2+json'
-#   api.headers['Content-Type'] = 'application/json'
-#   api.connection(default: false) do |conn|
-#     conn.use FaradayMiddleware::FollowRedirects
-#     conn.use Faraday::Response::RaiseError
-#     conn.request :json
-#     conn.response :json, content_type: /\bjson$/
-#     conn.adapter :net_http
-#   end
-# end
-#
-# xapp_token = api.tokens.xapp_token._post(client_id: client_id, client_secret: client_secret).token
-#
-# api = Hyperclient.new('https://api.artsy.net/api') do |api|
-#   api.headers['Accept'] = 'application/vnd.artsy-v2+json'
-#   api.headers['X-Xapp-Token'] = xapp_token
-#   api.connection(default: false) do |conn|
-#     conn.use FaradayMiddleware::FollowRedirects
-#     conn.use Faraday::Response::RaiseError
-#     conn.request :json
-#     conn.response :json, content_type: /\bjson$/
-#     conn.adapter :net_http
-#   end
-# end
-#
-# def find_specific_artist
-#
-# end
-def get_samples_pieces
+require 'pry'
+require 'rest-client'
+require 'net/http'
+require 'json'
+require 'uri'
+
+require_relative 'models'
+
+client_id = 'ff0239ea44d165afc1ac'
+client_secret = '139d6ec5e1b5f82166205b21a92c1f1f'
+api_url = URI.parse('https://api.artsy.net/api/tokens/xapp_token')
+response = Net::HTTP.post_form(api_url, client_id: client_id, client_secret: client_secret)
+xapp_token = JSON.parse(response.body)['token']
+# curl -v -L https://api.artsy.net/api/artists/andy-warhol -H 'X-Xapp-Token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUwOTQ1OTQ2NywiaWF0IjoxNTA4ODU0NjY3LCJhdWQiOiI1OWVlMzQwMzljMThkYjdiNGY3ZWNkMjMiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNTllZjRiOGIxMzliMjE2MzE4OGMwNTFjIn0.M0XBfUJLti38dxea1Xx8nVFjJg-JIaUWB2ZtEyvAziM'
+headers = {
+  'X-Xapp-Token': xapp_token
+}
+response = JSON.parse(RestClient.get("https://api.artsy.net:443/api/artworks", headers))
+
+def all_pieces(response)
+  response["_embedded"].map { |artworks| artworks }
+end
+
+def all_imgs(response)
+  response["_embedded"]["artworks"].each_with_object(imgs=[]) do |artwork|
+    imgs<<artwork["_links"]["thumbnail"]["href"]
+  end
+  imgs
+end
+
+#write methods to get all the columns of the "piece" class
+# t.string :name t.string :url t.string :img_url t.string :artist_name t.integer :gene_id t.integer :collection_id
+def all_titles(response)
+  response["_embedded"]["artworks"].each_with_object(titles=[]) do |artwork|
+    titles<<artwork["title"]
+  end
+  titles
+end
+
+def all_permalinks(response)
+  response["_embedded"]["artworks"].each_with_object(permalinks=[]) do |artwork|
+    permalinks<<artwork["_links"]["permalink"]["href"]
+  end
+  permalinks
+end
+
+def all_artist_names(response, headers)
+  response["_embedded"]["artworks"].each_with_object(artist_api_hrefs=[]) do |artwork|
+    artist_api_hrefs<<artwork["_links"]["artists"]["href"]
+  end
+  artist_api_hrefs.each_with_object(artist_names=[]) do |artist_href|
+    response = JSON.parse(RestClient.get(artist_href, headers))
+    response["_embedded"]["artists"].each do |artist|
+      artist_names<<artist["name"]
+    end
+  end
+  artist_names
+end
+
+def all_gene_names(response, headers)
+  response["_embedded"]["artworks"].each_with_object(gene_api_hrefs=[]) do |artwork|
+    gene_api_hrefs<<artwork["_links"]["genes"]["href"]
+  end
+  gene_api_hrefs.each_with_object(genes=[]) do |gene_href|
+    response = JSON.parse(RestClient.get(gene_href, headers))
+    response["_embedded"]["genes"].each do |gene|
+      genes<<gene["name"]
+    end
+  end
+end
+
+#write method to create instances w/ the above information
+def create_pieces(response,headers)
+  pieces = []
+  imgs=all_imgs(response)
+  titles=all_titles(response)
+  permalinks=all_permalinks(response)
+  artist_names=all_artist_names(response, headers)
+  genes=all_gene_names(response, headers)
+
+  i=0
+  while i < imgs.length do
+    # :name :url :img_url :artist_name :gene_id  :collection_id
+    titles[i].to_s = Piece.new(name: titles[i], url: permalinks[i], img_url: img[i], name: artist_name[i], gene_id: nil, collection_id: nil)
+    i+=1
+  end
+  binding.pry
+end
+binding.pry
+true
+binding.pry
+true

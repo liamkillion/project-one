@@ -2,7 +2,7 @@ require 'bundler/setup'
 Bundler.require
 require 'rake'
 require 'active_record'
-require 'catpix'
+# require 'catpix'
 
 require_all 'app'
 
