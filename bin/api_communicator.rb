@@ -6,17 +6,34 @@ require 'uri'
 
 require_relative '../config/environment.rb'
 
-client_id = 'ff0239ea44d165afc1ac'
-client_secret = '139d6ec5e1b5f82166205b21a92c1f1f'
-api_url = URI.parse('https://api.artsy.net/api/tokens/xapp_token')
-response = Net::HTTP.post_form(api_url, client_id: client_id, client_secret: client_secret)
-xapp_token = JSON.parse(response.body)['token']
-# curl -v -L https://api.artsy.net/api/artists/andy-warhol -H 'X-Xapp-Token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUwOTQ1OTQ2NywiaWF0IjoxNTA4ODU0NjY3LCJhdWQiOiI1OWVlMzQwMzljMThkYjdiNGY3ZWNkMjMiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNTllZjRiOGIxMzliMjE2MzE4OGMwNTFjIn0.M0XBfUJLti38dxea1Xx8nVFjJg-JIaUWB2ZtEyvAziM'
-headers = {
-  'X-Xapp-Token': xapp_token
-}
-response = JSON.parse(RestClient.get("https://api.artsy.net:443/api/artworks", headers))
-JSON.parse(RestClient.get(response["next"],headers))
+def get_headers
+  client_id = 'ff0239ea44d165afc1ac'
+  client_secret = '139d6ec5e1b5f82166205b21a92c1f1f'
+  api_url = URI.parse('https://api.artsy.net/api/tokens/xapp_token')
+  response = Net::HTTP.post_form(api_url, client_id: client_id, client_secret: client_secret)
+  xapp_token = JSON.parse(response.body)['token']
+  headers = {
+    'X-Xapp-Token': xapp_token
+  }
+end
+
+headers = get_headers
+
+def get_response(url="https://api.artsy.net:443/api/artworks")
+  client_id = 'ff0239ea44d165afc1ac'
+  client_secret = '139d6ec5e1b5f82166205b21a92c1f1f'
+  api_url = URI.parse('https://api.artsy.net/api/tokens/xapp_token')
+  response = Net::HTTP.post_form(api_url, client_id: client_id, client_secret: client_secret)
+  xapp_token = JSON.parse(response.body)['token']
+  # curl -v -L https://api.artsy.net/api/artists/andy-warhol -H 'X-Xapp-Token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUwOTQ1OTQ2NywiaWF0IjoxNTA4ODU0NjY3LCJhdWQiOiI1OWVlMzQwMzljMThkYjdiNGY3ZWNkMjMiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNTllZjRiOGIxMzliMjE2MzE4OGMwNTFjIn0.M0XBfUJLti38dxea1Xx8nVFjJg-JIaUWB2ZtEyvAziM'
+  headers = {
+    'X-Xapp-Token': xapp_token
+  }
+  response = JSON.parse(RestClient.get(url, headers))
+end
+
+response=get_response
+# JSON.parse(RestClient.get(response["next"],headers))
 
 def all_pieces(response)
   response["_embedded"].map { |artworks| artworks }
@@ -71,7 +88,7 @@ def all_gene_names(response, headers)
 end
 
 #write method to create instances w/ the above information
-def create_pieces(response,headers)
+def create_pieces(response=response,headers=headers)
   pieces = []
   imgs=all_imgs(response)
   titles=all_titles(response)
@@ -85,9 +102,12 @@ def create_pieces(response,headers)
     pieces << Piece.new(name: titles[i], url: permalinks[i], img_url: imgs[i], artist_name: artist_names[i])
     i+=1
   end
-  pieces
+  hash = {results: pieces, next: response["_links"]["next"]["href"]}
 end
 
-# "next" method-call from CLI to go to next page-go through next page HREF in original response
-binding.pry
-true
+
+def get_pieces(url="https://api.artsy.net:443/api/artworks")
+  headers = get_headers
+  response = get_response(url)
+  create_pieces(response,headers)
+end

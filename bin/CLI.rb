@@ -1,6 +1,7 @@
 
 require 'pry'
 require_relative '../config/environment.rb'
+require_relative 'api_communicator.rb'
 
  def welcome
    puts "Welcome Art Fan!"
@@ -62,7 +63,9 @@ def menu_1(user)
       menu_2(user)
         prints_menu(Menu_1)
     when "2"
-      search_gallery
+      pieces = get_pieces
+      pieces[:results].each{|piece| piece.print}
+      puts "Here is the next page url #{pieces[:next]}"
     when "3"
       break
     end
