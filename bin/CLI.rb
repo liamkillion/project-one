@@ -1,6 +1,7 @@
 
-require_relative "../config/environment.rb"
 require 'pry'
+require_relative '../config/environment.rb'
+
  def welcome
    puts "Welcome Art Fan!"
    puts "=================================="
@@ -28,6 +29,11 @@ def prints_menu(array)
   puts ""
   puts ""
 end
+
+def create_collection(user)
+  user.create_collection
+end
+
 
 def list_collections(user)
   # binding.pry

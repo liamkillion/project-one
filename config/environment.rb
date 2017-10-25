@@ -3,11 +3,8 @@ Bundler.require
 require 'rake'
 require 'active_record'
 require 'catpix'
-require_relative '../app/models/collection.rb'
-require_relative '../app/models/gene.rb'
-require_relative '../app/models/piece.rb'
-require_relative '../app/models/user.rb'
-require_all 'app/'
+require_all 'app/models'
+
 
 ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",
