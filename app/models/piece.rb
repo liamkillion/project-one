@@ -15,4 +15,9 @@ class Piece < ActiveRecord::Base
       :bg_fill => true,
       :resolution => "low"
     end
+
+    def local_methods
+      # [:id,name:,:url,:img_url,:artist_name,:gene_id,:collection_id]
+    end
+
 end

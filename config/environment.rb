@@ -7,10 +7,9 @@ require_relative '../app/models/collection.rb'
 require_relative '../app/models/gene.rb'
 require_relative '../app/models/piece.rb'
 require_relative '../app/models/user.rb'
+require_all 'app/'
 
 ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",
   :database => "db/arts.db"
 )
-
-require_all 'app/'
