@@ -4,7 +4,7 @@ require 'net/http'
 require 'json'
 require 'uri'
 
-require_relative 'models'
+require_relative 'app/models'
 
 client_id = 'ff0239ea44d165afc1ac'
 client_secret = '139d6ec5e1b5f82166205b21a92c1f1f'
@@ -86,7 +86,5 @@ def create_pieces(response,headers)
   end
   binding.pry
 end
-binding.pry
-true
 binding.pry
 true

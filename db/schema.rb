@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 6) do
+
+  create_table "collection_pieces", force: :cascade do |t|
+    t.integer "collection_id"
+    t.integer "piece_id"
+  end
 
   create_table "collections", force: :cascade do |t|
     t.string "name"
@@ -26,8 +31,11 @@ ActiveRecord::Schema.define(version: 4) do
     t.string "url"
     t.string "img_url"
     t.string "artist_name"
+  end
+
+  create_table "pieces_genes", force: :cascade do |t|
+    t.integer "piece_id"
     t.integer "gene_id"
-    t.integer "collection_id"
   end
 
   create_table "users", force: :cascade do |t|

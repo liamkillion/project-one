@@ -1,6 +1,6 @@
 # name_of_collection
 class Collection < ActiveRecord::Base
-  belongs_to :users
-  has_many :pieces
-  has_many :genes, through: :pieces
+  belongs_to :user
+  has_many :collection_pieces
+  has_many :pieces, through: :collection_pieces
 end

@@ -1,10 +1,11 @@
 # name
 class User < ActiveRecord::Base
    has_many :collections, dependent: :destroy
-  has_many :pieces, through: :collections
+   has_many :pieces, through: :collections
+   has_many :genes, through: :pieces
 
   def has_collection
-      self.collections.empty?
+      !self.collections.empty?
     end
 
   def create_collection

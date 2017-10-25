@@ -11,8 +11,6 @@ class CreatePieces < ActiveRecord::Migration[4.2]
       t.string :url
       t.string :img_url
       t.string :artist_name
-      t.integer :gene_id
-      t.integer :collection_id
     end
   end
 end
