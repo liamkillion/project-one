@@ -4,7 +4,7 @@ require 'net/http'
 require 'json'
 require 'uri'
 
-require_relative 'app/models'
+require_relative '../config/environment.rb'
 
 client_id = 'ff0239ea44d165afc1ac'
 client_secret = '139d6ec5e1b5f82166205b21a92c1f1f'
@@ -16,6 +16,7 @@ headers = {
   'X-Xapp-Token': xapp_token
 }
 response = JSON.parse(RestClient.get("https://api.artsy.net:443/api/artworks", headers))
+JSON.parse(RestClient.get(response["next"],headers))
 
 def all_pieces(response)
   response["_embedded"].map { |artworks| artworks }
@@ -77,14 +78,16 @@ def create_pieces(response,headers)
   permalinks=all_permalinks(response)
   artist_names=all_artist_names(response, headers)
   genes=all_gene_names(response, headers)
-
   i=0
+  pieces = []
   while i < imgs.length do
     # :name :url :img_url :artist_name :gene_id  :collection_id
-    titles[i].to_s = Piece.new(name: titles[i], url: permalinks[i], img_url: img[i], name: artist_name[i], gene_id: nil, collection_id: nil)
+    pieces << Piece.new(name: titles[i], url: permalinks[i], img_url: imgs[i], artist_name: artist_names[i])
     i+=1
   end
-  binding.pry
+  pieces
 end
+
+# "next" method-call from CLI to go to next page-go through next page HREF in original response
 binding.pry
 true

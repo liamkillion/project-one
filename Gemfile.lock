@@ -13,11 +13,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (8.0.0)
-<<<<<<< HEAD
     byebug (9.1.0)
-=======
-    byebug (8.2.2)
->>>>>>> 36f510869d0f491afafb5f685d09471d37cfe05d
     catpix (0.2.0)
       docopt (~> 0.5, >= 0.5.0)
       rmagick (~> 2.15, >= 2.15.2)
@@ -48,7 +44,7 @@ GEM
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
-    rake (12.1.0)
+    rake (12.2.1)
     require_all (1.4.0)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
@@ -95,18 +91,11 @@ DEPENDENCIES
   byebug
   catpix
   database_cleaner
-<<<<<<< HEAD
-=======
-  hyperclient
->>>>>>> 36f510869d0f491afafb5f685d09471d37cfe05d
   json
   pry
   rake
   require_all
-<<<<<<< HEAD
   rest-client
-=======
->>>>>>> 36f510869d0f491afafb5f685d09471d37cfe05d
   rspec
   sinatra-activerecord
   sqlite3
