@@ -38,10 +38,10 @@ collection4 = user3.collections.create(:name => "My favorites")
 
 
 # seed collections
-candle = Piece.create(:name => "Candle", :url => nil, :img_url=>'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"John" ,:gene_id=>nil, :collection_id=>nil)
-potato = Piece.create(:name => "Potato", :url => nil, :img_url=>'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"Billy", :gene_id=>nil, :collection_id=>nil)
-tomato = Piece.create(:name => "Tomato", :url => nil, :img_url=> 'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"Hean" ,:gene_id=>nil, :collection_id=>nil)
-baker = Piece.create(:name => "Baker", :url => nil, :img_url=>'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"Drake" ,:gene_id=>nil, :collection_id=>nil)
-butcher = Piece.create(:name => "Butcher", :url => nil, :img_url=>'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"Ringo", :gene_id=>nil, :collection_id=>nil)
+candle = Piece.create(:name => "Candle", :url => nil, :img_url=>'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"John")
+potato = Piece.create(:name => "Potato", :url => nil, :img_url=>'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"Billy")
+tomato = Piece.create(:name => "Tomato", :url => nil, :img_url=> 'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"Hean")
+baker = Piece.create(:name => "Baker", :url => nil, :img_url=>'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"Drake")
+butcher = Piece.create(:name => "Butcher", :url => nil, :img_url=>'https://d32dm0rphc51dk.cloudfront.net/BNqPRA9serVa2mFO2ToL5A/big_and_tall.jpg', :artist_name=>"Ringo")
 
 # binding.pry

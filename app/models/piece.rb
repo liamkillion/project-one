@@ -1,6 +1,9 @@
 class Piece < ActiveRecord::Base
-    belongs_to :collection
-    belongs_to :gene
+    has_many :collection_pieces
+    has_many :collections, through: :collections_pieces
+    has_many :users, through: :collections
+    has_many :piece_genes
+    has_many :genes, through: :piece_genes
 
 
     # It prints out the picture from the url on the terminal
@@ -17,7 +20,7 @@ class Piece < ActiveRecord::Base
     end
 
     def local_methods
-      # [:id,name:,:url,:img_url,:artist_name,:gene_id,:collection_id]
+      [:id,:name,:url,:img_url,:artist_name,:gene_id,:collection_id]
     end
 
 end
