@@ -205,15 +205,3 @@ def search_for_pieces(user,collection)
   binding.pry
   collection.pieces.find_by(id: 1)
 end
-
-def prints_menu_horizontal(array)
-  divisor
-  menu = []
-  array.each_with_index {|memo,index| menu << "#{index + 1} - #{memo}"}
-  puts menu.join("          ")
-  divisor
-end
-
-def rename_collection(user,collection)
-  binding.pry
-end
