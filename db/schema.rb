@@ -26,16 +26,16 @@ ActiveRecord::Schema.define(version: 6) do
     t.string "name"
   end
 
+  create_table "piece_genes", force: :cascade do |t|
+    t.integer "piece_id"
+    t.integer "gene_id"
+  end
+
   create_table "pieces", force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.string "img_url"
     t.string "artist_name"
-  end
-
-  create_table "pieces_genes", force: :cascade do |t|
-    t.integer "piece_id"
-    t.integer "gene_id"
   end
 
   create_table "users", force: :cascade do |t|

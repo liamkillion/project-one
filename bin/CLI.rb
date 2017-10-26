@@ -14,9 +14,9 @@ def get_user
    User.find_or_create_by(name: input)
  end
 
- def get_user_input(message="Please make your selection")
+ def get_user_input(message="Please make your selection",echo = true)
    puts message
-   input = gets.chomp
+  echo == true ? input = gets.chomp : STDIN.noecho(&:gets).chomp
  end
 
 def prints_menu(array)
@@ -36,8 +36,8 @@ end
 
 
 def list_collections(user)
-  # binding.pry
-  user.collections.all.each_with_index{|x,index|puts "#{index+1} - #{x.name}"}
+  clear_terminal
+  user.collections.each_with_index{|x,index| puts "#{index +1} - #{x.name}"}
 end
 
 def get_collection(user)
@@ -60,7 +60,6 @@ def menu_1(user)
   case response
     when "1"
       menu_2(user)
-        prints_menu(Menu_1)
     when "2"
       pieces = get_pieces
       pieces[:results].each{|piece| piece.print}
@@ -75,57 +74,53 @@ def menu_2(user)
   list_collections(user)
   prints_menu(Menu_2)
   user_input = get_user_input
-  if user_input == "1"
+  case user_input
+  when "1"
     menu_3(user,get_collection(user))
   end
 end
 
 def menu_3(user,collection)
   prints_menu(Menu_3)
-  user_input = get_user_input
-  if user_input == "1"
-    pieces = collection.pieces.all.each_with_index {|piece,index| puts "#{index + 1} - #{piece.name}"}
-    piece_input = get_user_input("Choose the Piece to see more options or type 0 to go back")
-    until (0...pieces.count) === piece_input.to_i
-      piece_input = get_user_input("Choose the Piece to see more options or type 0 to go back")
+  case user_input = get_user_input
+    when "1"
+      pieces = collection.pieces.all.each_with_index {|piece,index| puts "#{index + 1} - #{piece.name}"}
+      # binding.pry
+      if pieces.empty?
+        divisor
+        puts ""
+        puts ""
+        puts "This collection is empty"
+        puts ""
+        puts ""
+        divisor
+      else
+        piece_input = get_user_input("Choose the Piece to see more options or type any other key to go back")
+      piece_menu(collection.pieces.all[(piece_input.to_i) -1],collection,user)
+     end
+    when "2"
+      search_for_pieces(user,collection)
     end
-    if piece_input != 0
-      piece_menu(collection.pieces.all[(piece_input.to_i) -1])
-
-    end
-
-  elsif user_input == "2"
-    search_for_pieces
-  end
 end
 
-def search_by_artists
-  input = get_user_input("Please enter the name ot the artist")
-  # Api call
-end
-
-def search_by_genes
-  input = get_user_input("Please enter the name of the gene")
-  # Api call
-end
-
-def piece_menu(piece)
+def piece_menu(piece,collection,user)
   piece.print
-  piece.local_methods.each {|keys| puts  "#{keys}: #{piece[keys]}"}
+  Piece.local_methods.each {|keys| puts  "#{keys}: #{piece[keys]}"}
   puts ""
   puts ""
   divisor
   # piece.genes.each {|gene| puts "#{gene.name}"} wait until gets genes
   puts ""
   puts ""
-  prints_menu(["Remove Item from Collection","Go Back"])
-  user_input = get_user_input
-  if user_input == '1'
-    confirm = get_user_input("Are you sure you want to remove the item from your collection? Yes/No")
-    if confirm == "Yes"
-        Collection.find_by(id: piece.collection_id).pieces.delete(piece)
-        puts "The #{piece.name}, has been removed from your collection"
-      end
+  prints_menu_horizontal(["Remove From Collection","Go Back"])
+  case  user_input = get_user_input
+    when "1"
+        confirm = get_user_input("Are you sure you want to remove the item from your collection? Yes/No")
+        if confirm == "Yes"
+          binding.pry
+          Collection.find_by(id: piece.collection_id).pieces.delete(piece)
+          puts "The #{piece.name}, has been removed from your collection"
+        end
   end
 
 end
@@ -140,5 +135,25 @@ def divisor
   puts "==========================================================="
 end
 
+def clear_terminal
+  Gem.win_platform? ? (system "cls") : (system "clear")
+end
+def search_for_pieces(user,collection)
+  # collection.find_by()
+  binding.pry
+  collection.pieces.find_by(id: 1)
+end
+
+def prints_menu_horizontal(array)
+  divisor
+  menu = []
+  array.each_with_index {|memo,index| menu << "#{index + 1} - #{memo}"}
+  puts menu.join("          ")
+  divisor
+end
+
+def rename_collection(user,collection)
+  binding.pry
+end
 
 # binding.pry

@@ -16,10 +16,10 @@ class Piece < ActiveRecord::Base
       :center_y => true,
       :bg => "white",
       :bg_fill => true,
-      :resolution => "low"
+      :resolution => "high"
     end
 
-    def local_methods
+    def self.local_methods
       [:id,:name,:url,:img_url,:artist_name]
     end
 
