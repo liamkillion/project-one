@@ -16,7 +16,7 @@ class Piece < ActiveRecord::Base
       :center_y => true,
       :bg => "white",
       :bg_fill => true,
-      :resolution => "high"
+      :resolution => "low"
     end
 
     def self.local_methods

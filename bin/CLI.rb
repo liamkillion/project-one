@@ -60,13 +60,37 @@ def get_collection(user)
   end
 end
 
-def print_piece(count=0)
+def gallery_menu(user)
   pieces = get_pieces
-  pieces[:pieces].each do |piece|
-    binding.pry
+  counter = 0
+  response = 0
+  until response == 4
+    piece = pieces[:pieces][counter]
     piece.print
     prints_menu_horizontal(["Back","Next","Save","Exit"])
-    count += 1
+    response = get_user_input
+    case response
+    when "1"
+      counter -= 1
+    when "2"
+      counter += 1
+    when "3"
+      prints_menu(list_collections(user))
+      selection = get_user_input(["Select Your Collection"])
+      puts "Saved To Your Collection"
+      collection_to_save = user.collections.all[(selection.to_i)-1]
+      collection_to_save.pieces << piece
+      collection_to_save.save
+      # genes = []
+      # pieces[:genes].map do |gene_string|
+      #   Gene.new(gene_string.name)
+      #   genes << self
+      # genes.each do |gene_instance|
+      #   piece << gene_instance
+      counter += 1
+    when "4"
+      break
+    end
   end
 end
 
@@ -77,28 +101,10 @@ def menu_1(user)
   case response
     when "1"
       menu_2(user)
-    when "2"
-      print_piece
-      case response
-        when "1"
-          print_piece(count-1)
-        when user_input = "2"
-          price_piece(count+1)
-        when user_input = "3"
-          puts "Saved To Your Collection"
-          collectionpiece = New CollectionPiece(collection_id: user.collection.id, piece_id: pieces[piece].id)
-          genes = []
-          pieces[:genes].map do |gene_string|
-            Gene.new(gene_string.name)
-            genes << self
-          end
-          genes.each do |gene_instance|
-            piece << gene_instance
-          end
-          print_piece(count+1)
-        when "4"
-          break
-        end
+    when "2"#{search gallery}
+      gallery_menu(user)
+    when "3"
+      break
       puts "Here is the next page url #{pieces[:next]}"
     end
   end
