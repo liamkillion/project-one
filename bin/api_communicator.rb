@@ -89,20 +89,20 @@ end
 
 #write method to create instances w/ the above information
 def create_pieces(response=response,headers=headers)
-  pieces = []
   imgs=all_imgs(response)
   titles=all_titles(response)
   permalinks=all_permalinks(response)
   artist_names=all_artist_names(response, headers)
-  genes=all_gene_names(response, headers)
+  all_genes=all_gene_names(response, headers)
   i=0
   pieces = []
-  while i < imgs.length do
-    # :name :url :img_url :artist_name :gene_id  :collection_id
+  genes = {}
+  while i < titles.length do
     pieces << Piece.new(name: titles[i], url: permalinks[i], img_url: imgs[i], artist_name: artist_names[i])
+    genes["#{pieces[i]}"] = all_genes[i..i+5]
     i+=1
   end
-  hash = {results: pieces, next: response["_links"]["next"]["href"]}
+  hash = {pieces: pieces, genes: genes, next: response["_links"]["next"]["href"]}
 end
 
 

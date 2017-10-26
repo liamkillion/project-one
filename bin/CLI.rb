@@ -1,11 +1,9 @@
-
-require 'pry'
 require_relative '../config/environment.rb'
 require_relative 'api_communicator.rb'
 
  def welcome
    puts "Welcome Art Fan!"
-   puts "=================================="
+   divisor
    puts ""
    puts ""
  end
@@ -21,14 +19,22 @@ def get_user
  end
 
 def prints_menu(array)
-  puts "=================================="
+  divisor
   puts ""
   puts ""
   puts "Please make your selection"
   array.each_with_index {|memo,index| puts "#{index + 1} - #{memo}"}
-  puts "=================================="
+  divisor
   puts ""
   puts ""
+end
+
+def prints_menu_horizontal(array)
+  divisor
+  menu = []
+  array.each_with_index {|memo,index| menu << "#{index + 1} - #{memo}"}
+  puts menu.join('          ')
+  divisor
 end
 
 def create_collection(user)
@@ -54,6 +60,15 @@ def get_collection(user)
   end
 end
 
+def print_piece(count=0)
+  pieces = get_pieces
+  pieces[:pieces].each do |piece|
+    piece[count].print
+    prints_menu_horizontal(["Back","Next","Save","Exit"])
+    count += 1
+  end
+end
+
 def menu_1(user)
   loop do
   prints_menu(Menu_1)
@@ -63,14 +78,32 @@ def menu_1(user)
       menu_2(user)
         prints_menu(Menu_1)
     when "2"
-      pieces = get_pieces
-      pieces[:results].each{|piece| piece.print}
+      print_piece
+      case response
+        when "1"
+          print_piece(count-1)
+        when user_input = "2"
+          price_piece(count+1)
+        when user_input = "3"
+          puts "Saved To Your Collection"
+          collectionpiece = New CollectionPiece(collection_id: user.collection.id, piece_id: pieces[piece].id)
+          genes = []
+          pieces[:genes].map do |gene_string|
+            Gene.new(gene_string.name)
+            genes<<self
+          end
+          genes.each do |gene_instance|
+            piece<<gene_instance
+          end
+          print_piece(count+1)
+        when "4"
+          break
+        end
       puts "Here is the next page url #{pieces[:next]}"
-    when "3"
-      break
     end
   end
 end
+
 
 def menu_2(user)
   list_collections(user)
@@ -132,3 +165,6 @@ def exit
 end
 
 # binding.pry
+def divisor
+  puts "==========================================================="
+end
