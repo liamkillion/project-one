@@ -194,7 +194,7 @@ def exit
 end
 
 def divisor
-  puts "==========================================================="
+  puts "====================================================================================="
 end
 
 def clear_terminal
@@ -216,9 +216,4 @@ end
 
 def rename_collection(user,collection)
   binding.pry
-end
-
-# binding.pry
-def divisor
-  puts "==========================================================="
 end
