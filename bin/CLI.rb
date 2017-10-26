@@ -63,7 +63,8 @@ end
 def print_piece(count=0)
   pieces = get_pieces
   pieces[:pieces].each do |piece|
-    piece[count].print
+    binding.pry
+    piece.print
     prints_menu_horizontal(["Back","Next","Save","Exit"])
     count += 1
   end
