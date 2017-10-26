@@ -90,10 +90,10 @@ def menu_1(user)
           genes = []
           pieces[:genes].map do |gene_string|
             Gene.new(gene_string.name)
-            genes<<self
+            genes << self
           end
           genes.each do |gene_instance|
-            piece<<gene_instance
+            piece << gene_instance
           end
           print_piece(count+1)
         when "4"
@@ -112,6 +112,8 @@ def menu_2(user)
   case user_input
   when "1"
     menu_3(user,get_collection(user))
+  when "2"
+    create_collection(user)
   end
 end
 
@@ -119,21 +121,32 @@ def menu_3(user,collection)
   prints_menu(Menu_3)
   case user_input = get_user_input
     when "1"
-      pieces = collection.pieces.all.each_with_index {|piece,index| puts "#{index + 1} - #{piece.name}"}
-      # binding.pry
-      if pieces.empty?
-        divisor
-        puts ""
-        puts ""
-        puts "This collection is empty"
-        puts ""
-        puts ""
-        divisor
-      else
-        piece_input = get_user_input("Choose the Piece to see more options or type any other key to go back")
-      piece_menu(collection.pieces.all[(piece_input.to_i) -1],collection,user)
-     end
+      new_name = get_user_input("Please type the new name for your collection")
+      collection.name = new_name
+      collection.save
     when "2"
+        confirm = get_user_input("Are you sure you want to remove this collection? Yes/No")
+        if confirm == "Yes"
+          collection.destroy
+          collection.save
+          puts "The #{collection.name}, has been removed from your profile"
+        end
+     when "3"
+        pieces = collection.pieces.all.each_with_index {|piece,index| puts "#{index + 1} - #{piece.name}"}
+        # binding.pry
+        if pieces.empty?
+          divisor
+          puts ""
+          puts ""
+          puts "This collection is empty"
+          puts ""
+          puts ""
+          divisor
+        else
+          piece_input = get_user_input("Choose the Piece to see more options or type any other key to go back")
+        piece_menu(collection.pieces.all[(piece_input.to_i) -1],collection,user)
+       end
+     when "4"
       search_for_pieces(user,collection)
     end
 end
