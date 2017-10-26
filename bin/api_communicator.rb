@@ -102,7 +102,7 @@ def create_pieces(response=response,headers=headers)
     genes["#{pieces[i]}"] = all_genes[i..i+5]
     i+=1
   end
-  hash = {pieces: pieces, genes: genes, next: response["_links"]["next"]["href"]}
+  hash = {pieces: pieces, genes: genes, next: response["_links"]["next"]["href"], self: response["_links"]["self"]["href"]}
 end
 
 

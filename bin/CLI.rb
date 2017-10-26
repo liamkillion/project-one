@@ -61,37 +61,45 @@ def get_collection(user)
 end
 
 def gallery_menu(user)
-  pieces = get_pieces
   counter = 0
   response = 0
-  until response == 4
-    piece = pieces[:pieces][counter]
-    piece.print
-    prints_menu_horizontal(["Back","Next","Save","Exit"])
-    response = get_user_input
-    case response
-    when "1"
-      counter -= 1
-    when "2"
-      counter += 1
-    when "3"
-      prints_menu(list_collections(user))
-      selection = get_user_input(["Select Your Collection"])
-      puts "Saved To Your Collection"
-      collection_to_save = user.collections.all[(selection.to_i)-1]
-      collection_to_save.pieces << piece
-      collection_to_save.save
-      # genes = []
-      # pieces[:genes].map do |gene_string|
-      #   Gene.new(gene_string.name)
-      #   genes << self
-      # genes.each do |gene_instance|
-      #   piece << gene_instance
-      counter += 1
-    when "4"
-      break
+  pieces = get_pieces
+  # add "self" hrefs to new array of past pages (use .pop to delete and return)
+    until response == 4
+      piece = pieces[:pieces][counter]
+      piece.print
+      prints_menu_horizontal(["Back","Next","Save","Exit"])
+      response = get_user_input
+      case response
+      when "1"
+        counter -= 1
+      when "2"
+        counter += 1
+      when "3"
+        prints_menu(list_collections(user))
+        selection = get_user_input(["Select Your Collection"])
+        puts "Saved To Your Collection"
+        collection_to_save = user.collections.all[(selection.to_i)-1]
+        collection_to_save.pieces << piece
+        collection_to_save.save
+        # genes = []
+        # pieces[:genes].map do |gene_string|
+        #   Gene.new(gene_string.name)
+        #   genes << self
+        # genes.each do |gene_instance|
+        #   piece << gene_instance
+        counter += 1
+      when "4"
+        break
+      end
+      if counter < 0
+          pieces = get_pieces(lastpage)
+          counter = 0
+      elsif counter > 4
+        pieces = get_pieces(pieces[:next])
+        counter =0
+      end
     end
-  end
 end
 
 def menu_1(user)
