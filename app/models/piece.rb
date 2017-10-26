@@ -20,7 +20,7 @@ class Piece < ActiveRecord::Base
     end
 
     def local_methods
-      [:id,:name,:url,:img_url,:artist_name,:gene_id,:collection_id]
+      [:id,:name,:url,:img_url,:artist_name]
     end
 
 end

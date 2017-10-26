@@ -1,11 +1,10 @@
 
-require 'pry'
 require_relative '../config/environment.rb'
 require_relative 'api_communicator.rb'
 
  def welcome
    puts "Welcome Art Fan!"
-   puts "=================================="
+   divisor
    puts ""
    puts ""
  end
@@ -21,12 +20,12 @@ def get_user
  end
 
 def prints_menu(array)
-  puts "=================================="
+  divisor
   puts ""
   puts ""
   puts "Please make your selection"
   array.each_with_index {|memo,index| puts "#{index + 1} - #{memo}"}
-  puts "=================================="
+  divisor
   puts ""
   puts ""
 end
@@ -112,7 +111,13 @@ end
 
 def piece_menu(piece)
   piece.print
-  puts piece
+  piece.local_methods.each {|keys| puts  "#{keys}: #{piece[keys]}"}
+  puts ""
+  puts ""
+  divisor
+  # piece.genes.each {|gene| puts "#{gene.name}"} wait until gets genes
+  puts ""
+  puts ""
   prints_menu(["Remove Item from Collection","Go Back"])
   user_input = get_user_input
   if user_input == '1'
@@ -130,5 +135,10 @@ end
 def exit
   puts "Thank you visiting us!!!"
 end
+
+def divisor
+  puts "==========================================================="
+end
+
 
 # binding.pry
